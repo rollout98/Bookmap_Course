@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading the Tape — A 6-Week Bookmap Course for GC Scalping</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #0c0907;
+  --bg-paper: #14100b;
+  --bg-elev: #1c1610;
+  --bg-card: #221a13;
+  --rule: #3a2f23;
+  --rule-soft: #261e16;
+  --ink: #e8dcc4;
+  --ink-soft: #b8a685;
+  --ink-mute: #7a6a52;
+  --gold: #c9a961;
+  --gold-bright: #e6c373;
+  --bronze: #8a6e3a;
+  --green: #7a9a6f;
+  --red: #b85a4f;
+  --warn: #d4a04d;
+  --shadow: 0 1px 0 rgba(255,220,150,0.04), 0 12px 32px rgba(0,0,0,0.6);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--ink);
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 17px;
+  line-height: 1.65;
+  font-feature-settings: 'kern', 'liga', 'onum';
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% 0%, rgba(201,169,97,0.04), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(201,169,97,0.025), transparent 60%);
+  background-attachment: fixed;
+}
+
+/* === LAYOUT === */
+.layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 0;
+}
+
+aside.nav {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 32px 24px 32px 32px;
+  border-right: 1px solid var(--rule);
+  background: var(--bg-paper);
+}
+
+main {
+  padding: 64px 64px 120px 64px;
+  max-width: 880px;
+}
+
+/* === SIDEBAR NAV === */
+.brand {
+  font-family: 'Fraunces', serif;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  color: var(--gold);
+  margin-bottom: 4px;
+  font-variation-settings: 'opsz' 144;
+}
+.brand-sub {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 32px;
+}
+
+.nav-group {
+  margin-bottom: 24px;
+}
+.nav-group-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 8px;
+}
+.nav a {
+  display: block;
+  padding: 6px 0;
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.4;
+  transition: color 0.15s ease;
+}
+.nav a:hover { color: var(--gold-bright); }
+.nav a .num {
+  display: inline-block;
+  width: 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  font-weight: 500;
+}
+
+/* === HERO === */
+.hero {
+  padding-bottom: 48px;
+  margin-bottom: 56px;
+  border-bottom: 1px solid var(--rule);
+}
+.hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+.hero-eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+  vertical-align: middle;
+  margin-right: 16px;
+  margin-bottom: 3px;
+}
+h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  font-variation-settings: 'opsz' 144;
+  color: var(--ink);
+}
+h1 em {
+  font-style: italic;
+  color: var(--gold);
+  font-weight: 400;
+}
+.hero-lede {
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 680px;
+  font-style: italic;
+  font-family: 'Newsreader', serif;
+}
+.hero-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--rule-soft);
+}
+.hero-meta-item .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 6px;
+}
+.hero-meta-item .value {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  color: var(--gold);
+  font-variation-settings: 'opsz' 144;
+}
+
+/* === MODULE STRUCTURE === */
+.module {
+  padding: 64px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.module:last-of-type { border-bottom: none; }
+.module-header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 32px;
+  align-items: baseline;
+  margin-bottom: 48px;
+}
+.module-num {
+  font-family: 'Fraunces', serif;
+  font-weight: 800;
+  font-size: 88px;
+  line-height: 0.9;
+  color: var(--gold);
+  font-variation-settings: 'opsz' 144;
+  letter-spacing: -0.04em;
+}
+.module-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-variation-settings: 'opsz' 144;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.module-week {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+  margin: 48px 0 16px 0;
+  color: var(--gold-bright);
+  font-variation-settings: 'opsz' 144;
+}
+h2::before {
+  content: "§";
+  margin-right: 12px;
+  color: var(--gold);
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin: 32px 0 12px 0;
+  color: var(--ink);
+}
+
+p {
+  margin-bottom: 18px;
+  max-width: 70ch;
+}
+p strong {
+  color: var(--gold-bright);
+  font-weight: 600;
+}
+p em {
+  color: var(--ink-soft);
+}
+
+/* === DROP CAP === */
+.drop-cap::first-letter {
+  font-family: 'Fraunces', serif;
+  font-weight: 800;
+  float: left;
+  font-size: 72px;
+  line-height: 0.9;
+  padding: 4px 12px 0 0;
+  color: var(--gold);
+  font-variation-settings: 'opsz' 144;
+}
+
+/* === CARDS / CALLOUTS === */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  padding: 28px 32px;
+  margin: 28px 0;
+  position: relative;
+  box-shadow: var(--shadow);
+}
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--gold) 0, var(--bronze) 50%, transparent 100%);
+}
+.card-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+  display: block;
+}
+
+.callout-warning {
+  background: rgba(184,90,79,0.06);
+  border-left: 3px solid var(--red);
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+.callout-warning .card-label { color: var(--red); }
+
+.callout-key {
+  background: rgba(201,169,97,0.06);
+  border-left: 3px solid var(--gold);
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+
+/* === PATTERN CARDS === */
+.pattern {
+  border: 1px solid var(--rule);
+  background: var(--bg-elev);
+  margin: 32px 0;
+  display: grid;
+  grid-template-columns: 60px 1fr;
+}
+.pattern-marker {
+  background: var(--bg-card);
+  border-right: 1px solid var(--rule);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 0;
+  font-family: 'Fraunces', serif;
+  font-weight: 800;
+  font-size: 28px;
+  color: var(--gold);
+  font-variation-settings: 'opsz' 144;
+}
+.pattern-body { padding: 24px 28px; }
+.pattern-name {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+.pattern-tagline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 16px;
+}
+.pattern dl { display: grid; grid-template-columns: 130px 1fr; gap: 8px 16px; margin-top: 16px; }
+.pattern dt {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding-top: 4px;
+}
+.pattern dd {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* === LIST STYLES === */
+ul, ol {
+  margin: 16px 0 24px 0;
+  padding-left: 24px;
+  max-width: 70ch;
+}
+ul li, ol li {
+  margin-bottom: 10px;
+  padding-left: 8px;
+}
+ul li::marker {
+  color: var(--gold);
+  content: "— ";
+}
+ol li::marker {
+  color: var(--gold);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+}
+
+/* === DATA / TABLES === */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-family: 'Newsreader', serif;
+  font-size: 15px;
+}
+th {
+  text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 10px 16px 10px 0;
+  border-bottom: 1px solid var(--gold);
+  font-weight: 500;
+}
+td {
+  padding: 12px 16px 12px 0;
+  border-bottom: 1px solid var(--rule-soft);
+  vertical-align: top;
+}
+td.mono { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--gold-bright); }
+
+/* === DAILY PLAN === */
+.plan {
+  background: var(--bg-elev);
+  border: 1px solid var(--rule);
+  padding: 32px;
+  margin: 32px 0;
+}
+.plan-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--gold-bright);
+  margin-bottom: 4px;
+}
+.plan-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 20px;
+}
+.plan-day {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 24px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.plan-day:last-child { border-bottom: none; }
+.plan-day-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding-top: 2px;
+}
+.plan-day-task { font-size: 15px; line-height: 1.55; }
+
+/* === SELF TEST === */
+.test {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 32px 0;
+  margin: 40px 0;
+}
+.test-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.test ol li {
+  font-family: 'Newsreader', serif;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* === JOURNAL PROMPTS === */
+.journal {
+  border-left: 2px solid var(--gold);
+  padding: 8px 0 8px 24px;
+  margin: 32px 0;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+.journal-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-style: normal;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* === GC CALLOUT === */
+.gc-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(201,169,97,0.1);
+  border: 1px solid var(--bronze);
+  padding: 3px 10px;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-radius: 2px;
+}
+
+/* === DIVIDER === */
+.divider {
+  text-align: center;
+  margin: 56px 0;
+  color: var(--bronze);
+  font-size: 24px;
+  letter-spacing: 1em;
+}
+
+/* === APPENDIX === */
+.appendix {
+  background: var(--bg-paper);
+  margin: 80px -64px -120px -64px;
+  padding: 80px 64px;
+  border-top: 2px solid var(--gold);
+}
+.appendix-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.appendix h2 {
+  font-size: 28px;
+  color: var(--ink);
+  margin-top: 48px;
+}
+.appendix h2::before { content: ""; margin: 0; }
+
+.glossary { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.glossary-item {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 24px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule-soft);
+  align-items: baseline;
+}
+.glossary-term {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  color: var(--gold-bright);
+  font-size: 16px;
+  letter-spacing: 0.02em;
+}
+.glossary-def { font-size: 15px; line-height: 1.55; color: var(--ink-soft); }
+
+/* === RESOURCES === */
+.resource {
+  border: 1px solid var(--rule);
+  background: var(--bg-elev);
+  padding: 24px 28px;
+  margin-bottom: 16px;
+}
+.resource-name {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--gold-bright);
+  margin-bottom: 4px;
+}
+.resource-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 12px;
+}
+.resource-desc { font-size: 15px; line-height: 1.6; color: var(--ink-soft); }
+
+/* === FOOTER === */
+.footer {
+  margin-top: 80px;
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-align: center;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 1024px) {
+  .layout { grid-template-columns: 1fr; }
+  aside.nav {
+    position: relative;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+  }
+  main { padding: 40px 24px 80px 24px; }
+  h1 { font-size: 38px; }
+  .module-num { font-size: 60px; }
+  .module-title { font-size: 26px; }
+  .module-header { grid-template-columns: 1fr; gap: 12px; }
+  .hero-meta { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .glossary-item, .pattern dl { grid-template-columns: 1fr; gap: 4px; }
+  .pattern { grid-template-columns: 1fr; }
+  .pattern-marker { border-right: none; border-bottom: 1px solid var(--rule); padding: 16px; }
+  .appendix { margin: 60px -24px -80px -24px; padding: 48px 24px; }
+}
+
+/* === PRINT === */
+@media print {
+  body { background: white; color: black; font-size: 11pt; }
+  aside.nav { display: none; }
+  .layout { grid-template-columns: 1fr; }
+  main { padding: 0; max-width: 100%; }
+  .module { page-break-before: always; }
+  h1, h2, h3 { color: black; }
+  .module-num { color: #888; }
+  .card, .pattern, .plan { border: 1px solid #ccc; background: white; box-shadow: none; }
+  .footer { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+<aside class="nav">
+  <div class="brand">Reading the Tape</div>
+  <div class="brand-sub">Bookmap Course · GC Focus</div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">Curriculum</div>
+    <a href="#hero"><span class="num">00</span> Why this course exists</a>
+    <a href="#wk1"><span class="num">01</span> Foundation</a>
+    <a href="#wk2"><span class="num">02</span> Liquidity</a>
+    <a href="#wk3"><span class="num">03</span> Aggression</a>
+    <a href="#wk4"><span class="num">04</span> Absorption</a>
+    <a href="#wk5"><span class="num">05</span> Initiation</a>
+    <a href="#wk6"><span class="num">06</span> Integration</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">Reference</div>
+    <a href="#patterns"><span class="num">A</span> Pattern flashcards</a>
+    <a href="#glossary"><span class="num">B</span> Glossary</a>
+    <a href="#resources"><span class="num">C</span> Resource directory</a>
+    <a href="#templates"><span class="num">D</span> Journal templates</a>
+    <a href="#post"><span class="num">E</span> 30-day post-course plan</a>
+  </div>
+</aside>
+
+<main>
+
+<section class="hero" id="hero">
+  <div class="hero-eyebrow">A Six-Week Course</div>
+  <h1>Reading the <em>Tape</em>.<br>Building the Filter.</h1>
+  <p class="hero-lede">
+    Your candle system already works. What it lacks is a way to know,
+    before you click, which setups belong in the 90.6% that win and which belong in
+    the 9.4% that don't. Order flow is that filter. This is the path
+    to learning it without breaking what's already working.
+  </p>
+
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <div class="label">Duration</div>
+      <div class="value">6 weeks</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="label">Platform</div>
+      <div class="value">Bookmap</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="label">Instrument</div>
+      <div class="value">GC / MGC</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="label">Mode</div>
+      <div class="value">Observe</div>
+    </div>
+  </div>
+</section>
+
+<!-- WEEK 1 -->
+<section class="module" id="wk1">
+  <div class="module-header">
+    <div class="module-num">01</div>
+    <div>
+      <div class="module-week">Week One</div>
+      <div class="module-title">Foundation — what you're actually looking at</div>
+    </div>
+  </div>
+
+  <p class="drop-cap">Before patterns, before signals, before any decision logic, you need to understand what the Bookmap heatmap is showing you. Most traders open Bookmap, see swirling colors, and start hunting for setups. They never quite escape the feeling that they're guessing. The fix is simpler than it looks: spend the first week understanding the picture itself, and refuse to extract conclusions until the mechanics are second nature.</p>
+
+  <h2>The order book in plain language</h2>
+
+  <p>Every market has two stacks of orders sitting at the exchange: people who want to buy at specific prices below the current market (the <strong>bid</strong>) and people who want to sell at specific prices above the current market (the <strong>ask</strong>). These are <em>limit orders</em> — they wait passively until someone else comes along willing to take them.</p>
+
+  <p>Price moves only when an aggressive participant — someone using a <em>market order</em> — comes in and consumes one side of that book. A market buy lifts the offer; a market sell hits the bid. The book then updates: that price level is consumed, and price either moves to the next level (if the level was small) or holds (if the level was large enough to absorb the aggression).</p>
+
+  <p>That single mechanic — limit orders waiting, market orders eating them — is the entire game. Everything you're going to learn in this course is a variation on watching that interaction happen in real time.</p>
+
+  <h2>What the Bookmap heatmap actually shows</h2>
+
+  <p>The horizontal axis is time. The vertical axis is price. The colors show <strong>resting limit orders</strong> at each price level over time. Bright/intense color means lots of resting size sitting there. Faded color means little or none. As time advances and orders accumulate, get pulled, or get consumed, you see a moving picture of where size is building and where it's evaporating.</p>
+
+  <p>The single most important habit to build this week: <em>understand that bright bands of color are not predictions</em>. They are statements about what currently exists. When a bright band is consumed, that's an event — that's where information is created. When a bright band gets pulled before being touched, that's also information, often more useful than the consumption.</p>
+
+  <div class="callout-key">
+    <span class="card-label">Mental model</span>
+    <p style="margin: 0;">The heatmap is a <em>topographic map of intent</em>. Bright zones are mountains of resting orders. Price is a ball rolling across the terrain. Your job over the course is to learn which mountains stop the ball, which ones get steamrolled, and — most useful of all — which ones disappear right before the ball arrives.</p>
+  </div>
+
+  <h2>Volume bubbles and the price ladder</h2>
+
+  <p>On top of the heatmap, Bookmap overlays <strong>volume bubbles</strong> — circles whose size represents the amount of <em>aggressive</em> trading at each price and time. A big circle means a lot of contracts crossed the spread there. Color shows direction: green for buy aggression (market buys lifting the offer), red for sell aggression (market sells hitting the bid).</p>
+
+  <p>This is the second half of the picture. The heatmap shows resting intent; the bubbles show aggressive action. The interplay between them — big bubbles eating bright zones, big bubbles failing to move price through bright zones, bright zones disappearing before bubbles arrive — is where every meaningful pattern in this course lives.</p>
+
+  <h2><span class="gc-tag">GC Focus</span>Orientation: what gold actually looks like on Bookmap</h2>
+
+  <p>Gold futures (GC) tick at $0.10 per ounce, $10 per tick on the full contract, $1 per tick on the micro (MGC). The contract trades nearly 24 hours and has three personalities depending on session:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Session (CT)</th>
+        <th>Character</th>
+        <th>Tape readability</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>17:00 – 02:00</strong> Asia</td>
+        <td>Thin book, slower aggression, recurring liquidity stacks</td>
+        <td class="mono">Excellent — start here</td>
+      </tr>
+      <tr>
+        <td><strong>02:00 – 06:00</strong> London</td>
+        <td>Liquidity arrives, real flow begins, range expansion</td>
+        <td class="mono">Very good</td>
+      </tr>
+      <tr>
+        <td><strong>07:00 – 12:00</strong> NY morning</td>
+        <td>Cleanest aggression, news-driven impulses, deep book</td>
+        <td class="mono">Excellent</td>
+      </tr>
+      <tr>
+        <td><strong>12:00 – 15:00</strong> NY afternoon</td>
+        <td>Drift, low conviction, choppy</td>
+        <td class="mono">Skip while learning</td>
+      </tr>
+      <tr>
+        <td><strong>15:00 – 17:00</strong> Late NY</td>
+        <td>Liquidity thinning toward settlement</td>
+        <td class="mono">Skip while learning</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>You already know GC's price action through your Asia Gold swing system. That is a major advantage — you bring price-context fluency to a tape-reading curriculum, which is the order most courses get wrong. Use the Asian session as your training ground for weeks 1-3. It's slow enough to actually see what's happening.</p>
+
+  <h2>Setup — what to put on your screen this week</h2>
+
+  <ol>
+    <li><strong>Primary chart:</strong> Bookmap on GC, 1-minute price aggregation, full heatmap visible, volume bubbles enabled, with at least 2 hours of session history visible at all times.</li>
+    <li><strong>Secondary indicators:</strong> Cumulative Volume Delta (CVD) line at the bottom of the chart. Volume profile sidebar showing session-to-date.</li>
+    <li><strong>What to remove:</strong> Every other indicator. No moving averages, no oscillators, no your-existing-momentum tools. For the next six weeks, the heatmap is the only thing you're learning to read. The other tools will come back later, but they fight for attention right now.</li>
+    <li><strong>Second monitor:</strong> Your normal trading chart with your candle system and indicators. You will continue trading your existing system normally. Bookmap is observation-only this entire course.</li>
+  </ol>
+
+  <div class="callout-warning">
+    <span class="card-label">Discipline check</span>
+    <p style="margin: 0;">No trading decisions are to be made from Bookmap during the course. Not in week 6, not on a setup that "looks really clear." The point of these six weeks is to build pattern recognition without contaminating your existing edge. After the course you can begin a careful integration. Until then, watch only.</p>
+  </div>
+
+  <div class="plan">
+    <div class="plan-title">Daily Practice — Week One</div>
+    <div class="plan-sub">30 minutes per day · GC Asian session preferred</div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 1</div>
+      <div class="plan-day-task">Open Bookmap on GC, identify the bid stack and ask stack visually, watch 30 minutes without trying to predict anything. Note three moments where you noticed something visibly happening on the heatmap.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 2</div>
+      <div class="plan-day-task">Watch 30 minutes. Find one bright resting cluster on the bid side. Note what happened — did price reach it, did it get pulled before being touched, did it absorb a move?</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 3</div>
+      <div class="plan-day-task">Same exercise, ask side. Pay attention to whether the bright cluster you identify behaves differently from yesterday's bid cluster.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 4</div>
+      <div class="plan-day-task">Watch and tag three "events" — moments where something happened on the heatmap that you suspect mattered. Don't worry about whether you're right.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 5</div>
+      <div class="plan-day-task">Watch and try to identify the largest bubble (most aggressive trade) of your session. What was the heatmap doing right before it? Right after?</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Weekend</div>
+      <div class="plan-day-task">Bookmap replay of any one prior week's GC Asia session. 60 minutes. Walk through slowly. The replay function is your most valuable training tool — use it heavily over the next six weeks.</div>
+    </div>
+  </div>
+
+  <div class="test">
+    <div class="test-title">Self-Test — End of Week One</div>
+    <ol>
+      <li>What does a bright color on the heatmap actually represent?</li>
+      <li>What's the difference between a limit order and a market order, and which one moves price?</li>
+      <li>What does a large green bubble at a price tell you happened there?</li>
+      <li>If a bright cluster of resting orders gets pulled before price reaches it, what does that suggest about whoever placed it?</li>
+      <li>Which GC session is the easiest tape to read, and why?</li>
+    </ol>
+  </div>
+
+  <div class="journal">
+    <span class="journal-label">Journal prompt</span>
+    What surprised you this week about how the order book actually behaves, compared to how you imagined it before? Write a paragraph. Date it. You'll re-read this in week 6.
+  </div>
+</section>
+
+<!-- WEEK 2 -->
+<section class="module" id="wk2">
+  <div class="module-header">
+    <div class="module-num">02</div>
+    <div>
+      <div class="module-week">Week Two</div>
+      <div class="module-title">Liquidity — where the big players hide, and when they're lying</div>
+    </div>
+  </div>
+
+  <p class="drop-cap">Now that the picture makes sense, the question becomes: when a bright cluster appears on the heatmap, who put it there and what do they actually intend to do? Not all liquidity is real. Some of it is bait. Some of it is a placeholder. Some of it is a serious commitment that you can lean against. Learning to tell them apart is the work of week two.</p>
+
+  <h2>The four kinds of resting size you'll see</h2>
+
+  <p>Every bright zone on the heatmap is one of these. Learning to identify which is which, in real time, is roughly half of practical tape reading.</p>
+
+  <div class="pattern">
+    <div class="pattern-marker">α</div>
+    <div class="pattern-body">
+      <div class="pattern-name">Stacked Liquidity</div>
+      <div class="pattern-tagline">Real walls · large size sitting in commitment</div>
+      <p>A wide, persistent bright zone that has been sitting at a price level for many minutes or hours. It survives nearby price action. When price approaches, it doesn't pull. This is what real institutional intent looks like — somebody has decided that price is the level, and they're putting capital behind it.</p>
+      <p>On Bookmap, the visual signature is a thick bright band that maintains intensity over time. The longer it has been there, the more weight the market gives it.</p>
+    </div>
+  </div>
+
+  <div class="pattern">
+    <div class="pattern-marker">β</div>
+    <div class="pattern-body">
+      <div class="pattern-name">Iceberg Orders</div>
+      <div class="pattern-tagline">Hidden size · refresh patterns</div>
+      <p>A price level shows modest size on the book, gets traded into, and immediately reappears at the same level. Then again. And again. What you're watching is a much larger order being sliced — only a fraction is shown publicly at any moment, but each time aggression eats it, more is replenished from the hidden remainder.</p>
+      <p>On Bookmap, icebergs look like a level that absorbs more aggressive volume than its visible size could possibly account for. The heatmap shows a thin band at the level, but volume bubbles around it are huge and price doesn't move through. This is the highest-quality "real" liquidity signal in the entire course.</p>
+    </div>
+  </div>
+
+  <div class="pattern">
+    <div class="pattern-marker">γ</div>
+    <div class="pattern-body">
+      <div class="pattern-name">Pulled Liquidity</div>
+      <div class="pattern-tagline">Vanishing books · the most informative event</div>
+      <p>A bright cluster appears, sits for a while, and then — as price approaches — disappears. The orders were withdrawn before being tested. The placer didn't actually want to defend that level. They wanted the appearance of defense, or they wanted to influence other participants' decisions, or they got nervous.</p>
+      <p>This is more useful information than absorption or even initiation. When liquidity pulls in front of approaching price, the level is going to break. Hard. Watch for this constantly. The instant a bright zone goes dim as price closes in, the trade is to follow through, not fight it.</p>
+    </div>
+  </div>
+
+  <div class="pattern">
+    <div class="pattern-marker">δ</div>
+    <div class="pattern-body">
+      <div class="pattern-name">Spoofing</div>
+      <div class="pattern-tagline">Fake intent · illegal but persistent</div>
+      <p>A large order flashes onto the book away from price, sits briefly, then cancels — never intended to trade. The purpose is to influence other participants into believing there's resistance/support somewhere, so they trade ahead of it in the desired direction. The spoofer profits from the resulting move and never has to actually defend the level.</p>
+      <p>On Bookmap, spoofs look like brief bright flashes that appear and disappear without price ever testing them. Single instances are noise. Repeated patterns at similar levels — appear, sit 10-30 seconds, vanish — are spoofs and you should treat that level as meaningless.</p>
+    </div>
+  </div>
+
+  <h2>Reading the difference in real time</h2>
+
+  <p>The fastest mental shortcut: <strong>time on the book is conviction</strong>. A cluster that has sat for 30 minutes is far more meaningful than one that appeared 30 seconds ago. When you scan the heatmap and see brightness, your first question should be "how long has that been there?" — and Bookmap's history view answers that directly.</p>
+
+  <p>The second question is <strong>"how does it react when price gets close?"</strong> Real liquidity sits and absorbs. Fake liquidity pulls. You don't need to predict which it is in advance — you just need to watch what happens when the test occurs.</p>
+
+  <h2><span class="gc-tag">GC Focus</span>Where gold's real liquidity lives</h2>
+
+  <p>Three locations matter most for GC. Memorize them; they recur every session.</p>
+
+  <ul>
+    <li><strong>Round number handles ($10/oz boundaries — 4500, 4510, 4520, etc.):</strong> Real participants stack at these levels routinely. The deeper the handle (4500 vs 4505), the more size tends to gather there. When GC is approaching a round handle, scan the heatmap for stacking that has built up over the last hour. That's the level the next move will fight or break.</li>
+    <li><strong>Prior session high and low:</strong> The visible H/L of yesterday's regular trading hours acts as magnet liquidity. Stops sit just beyond. Limit orders sit just before. The interaction at these levels is where many of GC's cleanest moves originate.</li>
+    <li><strong>Asia session range extremes:</strong> Particularly relevant given your existing system. The Asia high and low become reference points London and NY will test. Liquidity stacks at these prices throughout the night.</li>
+  </ul>
+
+  <div class="callout-key">
+    <span class="card-label">The single most important week-2 takeaway</span>
+    <p style="margin: 0;">Pulled liquidity is the most actionable single pattern in the entire course. When a bright cluster goes dim as price approaches, the next 10-20 ticks tend to come fast in the direction of the prior move. This is the one pattern you should be hunting for in every session you watch this week.</p>
+  </div>
+
+  <div class="plan">
+    <div class="plan-title">Daily Practice — Week Two</div>
+    <div class="plan-sub">30-45 minutes per day · GC Asia or London session</div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 1</div>
+      <div class="plan-day-task">Identify one stacked liquidity event during your session — a bright cluster that has been sitting for 30+ minutes. Watch what happens when price approaches it. Did it hold or break?</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 2</div>
+      <div class="plan-day-task">Find an iceberg. Look for a level where volume bubbles are repeatedly large but price doesn't move through. Note the bid/ask side and the duration of the absorption.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 3</div>
+      <div class="plan-day-task">Hunt for one clear pulled-liquidity event. A bright zone vanishing before price tests it. This is the holy grail of week 2 — when you catch it live, screenshot it.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 4</div>
+      <div class="plan-day-task">Watch a round-number test on GC ($10 handle). Note the size of the stacking before, the size of the aggression that hit it, and the outcome.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 5</div>
+      <div class="plan-day-task">Replay your trading day's GC Asia session. Identify in hindsight: which clusters held, which got pulled, which got absorbed. Compare to what you'd have predicted live.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Weekend</div>
+      <div class="plan-day-task">90 minutes of replay. Pick one full GC London session and walk through every meaningful liquidity event. Tag each as stacked / iceberg / pulled / spoof.</div>
+    </div>
+  </div>
+
+  <div class="test">
+    <div class="test-title">Self-Test — End of Week Two</div>
+    <ol>
+      <li>How do you tell stacked liquidity from spoofed liquidity in real time?</li>
+      <li>What's the visual signature of an iceberg order on Bookmap?</li>
+      <li>If a bright cluster pulls just before price reaches it, what's the most likely next move?</li>
+      <li>Why are round-number handles and prior session H/L worth watching specifically on GC?</li>
+      <li>Which type of liquidity event is the most actionable for short-term trading, and why?</li>
+    </ol>
+  </div>
+
+  <div class="journal">
+    <span class="journal-label">Journal prompt</span>
+    Of the four liquidity types, which felt the most natural to spot, and which gave you the most trouble? What does that tell you about where to focus next week's attention?
+  </div>
+</section>
+
+<!-- WEEK 3 -->
+<section class="module" id="wk3">
+  <div class="module-header">
+    <div class="module-num">03</div>
+    <div>
+      <div class="module-week">Week Three</div>
+      <div class="module-title">Aggression — who's pressing, and how hard</div>
+    </div>
+  </div>
+
+  <p class="drop-cap">Resting orders set the stage. Market orders write the story. Week three shifts attention from the heatmap to the volume bubbles — the actual aggression crossing the spread, the one thing that genuinely moves price. By the end of this week you should be able to look at any minute of GC tape and answer two questions instantly: who is pressing, and is anyone home to stop them.</p>
+
+  <h2>What the volume bubbles really say</h2>
+
+  <p>Each bubble represents the contracts that traded aggressively at a given price during a given moment. <strong>Green bubbles = market buys lifting the offer. Red bubbles = market sells hitting the bid.</strong> Size of the bubble = number of contracts. The position of the bubble vertically tells you the price; horizontally tells you the time.</p>
+
+  <p>What this means in practice: every time you see a green bubble, somebody decided they needed to be long badly enough to pay the spread. Every red bubble is the same thing in reverse. The size and frequency of those decisions tell you whether participation is growing or shrinking, and which side has the conviction.</p>
+
+  <h2>Cumulative Volume Delta — the running scoreboard</h2>
+
+  <p>CVD is the running sum of (buy aggression − sell aggression) over time. When CVD rises, more contracts are being aggressively bought than aggressively sold. When CVD falls, the reverse. The line itself doesn't predict price — but the <strong>relationship between CVD and price</strong> tells you whether a move is real or a head-fake.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Price action</th>
+        <th>CVD action</th>
+        <th>Interpretation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Rising</td><td>Rising</td><td>Healthy uptrend — buyers really are buying</td></tr>
+      <tr><td>Rising</td><td>Flat or falling</td><td><strong>Divergence.</strong> Price is rising on lack of selling, not real buying. Fragile.</td></tr>
+      <tr><td>Falling</td><td>Falling</td><td>Healthy downtrend — sellers really are selling</td></tr>
+      <tr><td>Falling</td><td>Flat or rising</td><td><strong>Divergence.</strong> Price is falling on lack of buying, not real selling. Bounce candidate.</td></tr>
+      <tr><td>Flat / range</td><td>Strongly trending</td><td>Absorption — one side pressing, other side passively eating it. Range will eventually break in CVD direction.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Speed of tape</h2>
+
+  <p>Volume bubbles in rapid succession at large size = aggressive participation. Sparse, small bubbles = quiet. The rate at which bubbles appear gives you a feel for whether you're in a moment of real flow or just drift.</p>
+
+  <p>Some traders watch this in time-and-sales windows; on Bookmap, the visual rhythm of bubbles arriving works just as well and is faster to read peripherally while you're watching the heatmap proper. By end of week three you should be able to glance at any 30-second window of tape and say "fast" or "slow" without thinking about it.</p>
+
+  <h2><span class="gc-tag">GC Focus</span>When gold actually has flow</h2>
+
+  <p>Gold is not constantly liquid. The aggressive flow comes in bursts, mostly tied to:</p>
+
+  <ul>
+    <li><strong>Asia open (17:00 CT) and the early evening:</strong> Modest flow as Asian institutions wake up. Your existing 7:50-8:10 PM CT window sits in this zone.</li>
+    <li><strong>London open (02:00 CT):</strong> First real wave of European participation. Flow doubles or triples within minutes of the open.</li>
+    <li><strong>NY open and the first 90 minutes (07:30-09:00 CT):</strong> The deepest, fastest tape of the day. Most aggressive moves originate here.</li>
+    <li><strong>News releases:</strong> Fed, CPI, NFP, geopolitical headlines. Flow goes from sparse to violent in seconds. Don't trade through these while learning; do watch them in replay.</li>
+  </ul>
+
+  <p>Outside these windows, GC drifts. The bubbles are sparse, the heatmap is mostly stable, and it's hard to learn from the tape because not much is happening on the tape. Spend your screen time during the active windows.</p>
+
+  <div class="callout-key">
+    <span class="card-label">The key shift</span>
+    <p style="margin: 0;">Until now you've been watching where price is and where it might be drawn to. From this week on, you also watch <em>how it's getting there</em>. A 10-tick move on big aggressive bubbles with rising CVD is a different animal from a 10-tick drift on no volume at all. Same chart pattern; opposite implications.</p>
+  </div>
+
+  <div class="plan">
+    <div class="plan-title">Daily Practice — Week Three</div>
+    <div class="plan-sub">45 minutes per day · prefer London or NY open for active flow</div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 1</div>
+      <div class="plan-day-task">Identify the largest single bubble of your session. What direction was it? What was the heatmap doing in the second before? In the second after?</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 2</div>
+      <div class="plan-day-task">Watch CVD for 45 minutes. Find one moment of clear divergence (price one way, CVD the other). Note what happened in the next 10 minutes.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 3</div>
+      <div class="plan-day-task">Pick a 5-minute window where the tape was clearly fast. Then a 5-minute window where it was clearly slow. Note the difference in bubble size, frequency, and direction balance.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 4</div>
+      <div class="plan-day-task">Find one moment where price was flat but CVD was strongly trending. Note the eventual breakout direction.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 5</div>
+      <div class="plan-day-task">Walk back through three of your candle setups from your live trading today. For each, look at the bubble pattern in the 3 candles preceding entry. Was the aggression in your direction or against you?</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Weekend</div>
+      <div class="plan-day-task">Replay one full London open. Annotate every CVD divergence and every fast-tape burst. Compare them to what price did afterward.</div>
+    </div>
+  </div>
+
+  <div class="test">
+    <div class="test-title">Self-Test — End of Week Three</div>
+    <ol>
+      <li>What does a green bubble actually mean about who did what?</li>
+      <li>Price is making a higher high but CVD is making a lower high. What's the most likely next move?</li>
+      <li>What does it mean when price is ranging but CVD is strongly trending in one direction?</li>
+      <li>During which sessions does GC actually have aggressive flow worth reading?</li>
+      <li>You see a fast-tape burst with large bubbles and a divergent CVD. Bullish or bearish bias?</li>
+    </ol>
+  </div>
+
+  <div class="journal">
+    <span class="journal-label">Journal prompt</span>
+    Look back at any losing or break-even trade you took this week. With three weeks of tape exposure now, can you describe what the order flow was telling you in hindsight that you couldn't see at the time?
+  </div>
+</section>
+
+<!-- WEEK 4 -->
+<section class="module" id="wk4">
+  <div class="module-header">
+    <div class="module-num">04</div>
+    <div>
+      <div class="module-week">Week Four</div>
+      <div class="module-title">Absorption — when aggression fails, the highest-EV pattern in tape reading</div>
+    </div>
+  </div>
+
+  <p class="drop-cap">If there is a single pattern worth all six weeks of work, it is absorption. Every other pattern in tape reading is a variation, an antecedent, or a derivative of this one event: aggressive flow arrives, hits a price level, and stalls. The aggression is real — bubbles are big, the tape is fast — but the price doesn't move. Somebody is sitting there, eating everything that arrives, and refusing to budge. When you see this, you are watching a fight in real time, and one side has already decided how it ends.</p>
+
+  <h2>What absorption actually is, mechanically</h2>
+
+  <p>Imagine 500 contracts of aggressive market buying hitting an offer. In a typical move, those 500 contracts would push price up several ticks as they consumed level after level. In absorption, the 500 contracts hit the offer and price doesn't move. That means somebody on the other side had at least 500 contracts of <em>resting limit sell</em> orders sitting at that price, and they were willing to fill the entire aggression without giving ground.</p>
+
+  <p>Why does this matter? Because when one side throws everything it has at a level and the level holds, the aggressive side has exhausted itself. The next move is in the opposite direction, because the side that absorbed was the side with conviction and capital. The aggressive side just spent its ammunition and got nothing.</p>
+
+  <h2>What absorption looks like on Bookmap</h2>
+
+  <p>The visual signature is unmistakable once you've seen it a few times:</p>
+
+  <ol>
+    <li><strong>Price stalls</strong> at a level — three, five, ten bars trading in a tight band</li>
+    <li><strong>Volume bubbles are large</strong> at that band — heavy aggression keeps arriving</li>
+    <li><strong>Heatmap stays bright</strong> at the absorbing level — orders refresh as fast as they're consumed (an iceberg pattern from week 2)</li>
+    <li><strong>CVD continues to trend</strong> in the aggressive direction even though price isn't moving — the divergence pattern from week 3</li>
+    <li><strong>Eventually, the aggression peters out</strong> — bubble sizes shrink, tape slows — and price reverses sharply</li>
+  </ol>
+
+  <p>That fifth point is when the trade exists. The reversal off absorption is fast and clean because the absorbing side has been winning the entire fight; once aggression dies, there's nothing stopping the other direction.</p>
+
+  <div class="callout-key">
+    <span class="card-label">The mental script</span>
+    <p style="margin: 0;">When you see price stalled at a level with big bubbles arriving, ask: <em>"Is this aggression making progress?"</em> If volume is huge but price isn't moving, the answer is no. Aggression that doesn't make progress is exhausted aggression. Trade the reversal, not the continuation.</p>
+  </div>
+
+  <h2>Absorption vs accumulation — a critical distinction</h2>
+
+  <p>These look similar but mean different things:</p>
+
+  <ul>
+    <li><strong>Absorption</strong> happens at extremes — a high being tested, a low being probed, a level being broken. The aggression is concentrated, fast, and gets defeated by a wall. The reversal is sharp.</li>
+    <li><strong>Accumulation</strong> happens over longer time frames — hours, sometimes days. Persistent two-sided activity in a range with a slight directional bias. Price moves laterally while one side quietly builds a position. The eventual breakout is in the accumulation direction.</li>
+  </ul>
+
+  <p>Both are useful. For 20-tick scalping, absorption is the higher-leverage pattern because it resolves in minutes, not hours.</p>
+
+  <h2>Failed breakouts as absorption tells</h2>
+
+  <p>One of the cleanest expressions of absorption: a breakout setup that fails immediately. Price pushes through a prior high on volume, can't extend, and gets violently sold. What you watched was absorption at the breakout level — limit sellers were waiting above, ate every aggressive buy that arrived, and then some larger seller (or a flush of stops) drove the reversal.</p>
+
+  <p>For your existing candle system, this is directly relevant: the 9.4% of your setups that fail catastrophically are very often absorption-against-trend events. The 3-bar momentum that triggered your entry was the aggressive side. The catastrophic loss came when that aggression hit absorption. Knowing how to spot the absorption forming would identify those failures in advance.</p>
+
+  <h2><span class="gc-tag">GC Focus</span>Where gold's absorption is highest quality</h2>
+
+  <ul>
+    <li><strong>Prior day H/L tests:</strong> The single highest-EV absorption pattern on GC. When price approaches yesterday's high or low on aggression and stalls there, the absorption is institutional and the reversal is reliable. This is the trade idea you should be watching for in every NY morning session for the rest of your career.</li>
+    <li><strong>Round-handle defenses:</strong> $10 boundaries on GC. When price gets pushed into a $10 level on heavy bubbles and stalls with a bright heatmap defending, the level usually holds and the bounce is 15-30 ticks.</li>
+    <li><strong>Asia high/low at NY morning:</strong> When NY tries to break through Asia's range and gets absorbed, the reversal back into range is a high-probability scalp.</li>
+  </ul>
+
+  <div class="callout-warning">
+    <span class="card-label">A discipline note</span>
+    <p style="margin: 0;">Absorption is the most psychologically difficult pattern to trade because you're going against the apparent momentum. Every visual cue you've trained on for years says "this is going up — don't sell here." The tape is telling you the opposite. This is precisely why most retail traders never learn it: it requires trusting tape over price action when the two disagree. You're not trying to do this yet. You're learning to recognize it.</p>
+  </div>
+
+  <div class="plan">
+    <div class="plan-title">Daily Practice — Week Four</div>
+    <div class="plan-sub">45 minutes per day · prefer NY morning for cleanest absorption</div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 1</div>
+      <div class="plan-day-task">Find one absorption event in your session. Screenshot it at three moments: just before, during the stall, immediately after the reversal. Save these screenshots in a folder you'll keep all course long.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 2</div>
+      <div class="plan-day-task">Watch a prior day H/L test on GC if one occurs. Was there absorption? Did the level hold? Note the bubble pattern and CVD behavior during the test.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 3</div>
+      <div class="plan-day-task">Find a failed breakout. Walk through what the tape was doing in the 60 seconds before the failure became obvious.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 4</div>
+      <div class="plan-day-task">Hunt for absorption at a round-handle level on GC. If you find one, note the reversal magnitude. If you don't find one, watch a replay of any session that did.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 5</div>
+      <div class="plan-day-task">Take three of your live candle entries from this week. For each, look at the tape immediately before. Was there any absorption forming against your direction? If yes, note whether the trade ultimately worked or failed.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Weekend</div>
+      <div class="plan-day-task">90 minutes of replay. Specifically hunt absorption events. Mark each one. Build pattern memory through repetition. By the end of this session you should be able to spot the formation visually within 10-15 seconds of it starting.</div>
+    </div>
+  </div>
+
+  <div class="test">
+    <div class="test-title">Self-Test — End of Week Four</div>
+    <ol>
+      <li>What does it mean mechanically when price stalls but big bubbles keep arriving?</li>
+      <li>How do you tell absorption from accumulation?</li>
+      <li>What's the typical CVD behavior during an absorption event?</li>
+      <li>Why is absorption psychologically difficult to act on?</li>
+      <li>Which GC level type produces the cleanest absorption signals?</li>
+    </ol>
+  </div>
+
+  <div class="journal">
+    <span class="journal-label">Journal prompt</span>
+    Describe in your own words what absorption "feels like" on the tape now that you've watched several events. What's the cue your brain is starting to recognize? You're building intuition — articulate it before it solidifies.
+  </div>
+</section>
+
+<!-- WEEK 5 -->
+<section class="module" id="wk5">
+  <div class="module-header">
+    <div class="module-num">05</div>
+    <div>
+      <div class="module-week">Week Five</div>
+      <div class="module-title">Initiation — when real moves begin</div>
+    </div>
+  </div>
+
+  <p class="drop-cap">Absorption is what stops moves. Initiation is what starts them. The two are mirror images of each other, and together they account for the great majority of meaningful price movement. By the end of week five you should be able to distinguish between drift, false starts, and genuine initiation — and that distinction is precisely what your candle system needs in order to filter the 9.4% failures from the 90.6% wins.</p>
+
+  <h2>What initiation actually is</h2>
+
+  <p>Initiation is the opposite mechanic of absorption. Aggressive flow arrives at a level. The book gives way. Price moves through the level into thinner liquidity, and the move accelerates because each successive level fails to defend itself. Whereas absorption is "aggression met by an immovable wall," initiation is "aggression met by an empty room."</p>
+
+  <p>The key visual signature: <strong>price moves cleanly through resting liquidity that should have stopped it</strong>. The heatmap shows what looks like meaningful resting orders ahead, and then those orders get vaporized — either consumed or pulled — and price rolls forward.</p>
+
+  <h2>The four-part initiation sequence</h2>
+
+  <p>Real initiation almost always unfolds in this sequence. Recognizing it as it forms is the work of the week.</p>
+
+  <ol>
+    <li><strong>Setup:</strong> Price compresses near a key level. The book builds on both sides. Tape is moderate. CVD is neutral or mildly trending.</li>
+    <li><strong>The first push:</strong> A burst of aggression in one direction. Several large bubbles in quick succession. Price moves a few ticks. CVD spikes.</li>
+    <li><strong>The book reaction:</strong> This is the moment that defines whether initiation is real. <em>Either</em> the resting liquidity stays put and absorbs (false start, fade trade), <em>or</em> the resting liquidity pulls and price rolls through (real initiation, follow trade).</li>
+    <li><strong>The follow-through:</strong> If real, the next 10-30 seconds bring continued aggression in the same direction, with price moving cleanly through additional levels. This is when the 20-tick move materializes.</li>
+  </ol>
+
+  <p>Pay particular attention to step 3. The decision to take or skip a candle entry should hinge here. If you see price push, then see resting liquidity ahead pull or evaporate, you're watching real initiation. If you see price push and the liquidity ahead stays put or grows, you're watching a setup for absorption.</p>
+
+  <h2>Failed initiation — the fade signal</h2>
+
+  <p>Sometimes initiation looks real for the first 5-10 seconds and then dies. Aggression spikes, price moves a few ticks, and then... nothing. The bubbles get smaller, the tape slows, the heatmap rebuilds in the direction of the move.</p>
+
+  <p>This is your "false start" pattern. Real initiation builds momentum bar over bar. Failed initiation peaks and reverses. When you see a candle setup form on the back of failed initiation, that's a low-quality entry — the same trigger that would have been A-grade with real initiation behind it. By week 6 this distinction will be visible to you in real time.</p>
+
+  <h2>Combining initiation with your candle system</h2>
+
+  <p>Your 3-candle trigger is, mechanically, a momentum-continuation setup. It works when the momentum is real and fails when the momentum is fake. Initiation tells you which is which. The mental decision tree at the moment of trigger:</p>
+
+  <table>
+    <thead>
+      <tr><th>Tape evidence</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Real initiation in trigger direction (book gave way, CVD aligned, fast tape)</td><td><strong>A-grade — take normal size</strong></td></tr>
+      <tr><td>Drifting move with no clear initiation, CVD neutral</td><td>B-grade — smaller size or skip</td></tr>
+      <tr><td>Failed initiation visible, or absorption forming against the move</td><td><strong>Skip</strong> — this is where the 9.4% lives</td></tr>
+      <tr><td>Counter-trend trigger against absorbing wall</td><td>Skip the trigger, watch for the reversal as a separate trade idea</td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="gc-tag">GC Focus</span>Initiation in your existing 7:50–8:10 PM CT window</h2>
+
+  <p>You already trade GC during this Asia-open window with your swing system. The same window contains some of the cleanest small-scale initiation patterns of the entire 24-hour cycle, because liquidity is finally arriving but is still thin enough to read. Asia opens, participation steps up, and the first real directional moves of the night begin to form.</p>
+
+  <p>For week 5, focus all your observation time here if your schedule allows. You already have price-action context for this window from your swing trading, so adding tape context is purely additive. By the end of the week you should be able to look at the tape during this window and tell the difference between drift, false starts, and initiation within 30 seconds of activity beginning.</p>
+
+  <div class="callout-key">
+    <span class="card-label">Bridge to your system</span>
+    <p style="margin: 0;">Initiation is the single concept most directly applicable to your candle scalping. The 3-candle pattern fires equally well behind real initiation and fake momentum — but the outcome of those two cases is wildly different. Learn to see initiation forming, and you've identified your discretionary filter.</p>
+  </div>
+
+  <div class="plan">
+    <div class="plan-title">Daily Practice — Week Five</div>
+    <div class="plan-sub">45 minutes per day · prioritize Asia open and London open</div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 1</div>
+      <div class="plan-day-task">Identify one clear initiation event. Walk through the 4-part sequence in your journal. Note the magnitude of the move that followed.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 2</div>
+      <div class="plan-day-task">Find one failed initiation. Note what looked like a real start and where the pattern broke down.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 3</div>
+      <div class="plan-day-task">During Asia open or London open: watch a 30-minute window and try to predict, in real time, whether each push you see will continue or fail. Don't trade — just commit a prediction silently before each play resolves. Track your accuracy.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 4</div>
+      <div class="plan-day-task">Take three of your live candle entries today. For each, classify what was happening on the tape: real initiation, drift, or failed initiation. Compare classification to outcome.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 5</div>
+      <div class="plan-day-task">Replay the 7:50-8:10 PM CT window from yesterday or today. Look for the cleanest initiation move and the cleanest failed initiation. Save both as reference screenshots.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Weekend</div>
+      <div class="plan-day-task">2-hour replay session. Pick one full London open. Annotate every initiation attempt — successful and failed — with timestamps. Build a personal library of reference patterns.</div>
+    </div>
+  </div>
+
+  <div class="test">
+    <div class="test-title">Self-Test — End of Week Five</div>
+    <ol>
+      <li>What's the four-part initiation sequence?</li>
+      <li>At which step in the sequence does the take/skip decision really live?</li>
+      <li>What does failed initiation look like, and why does the candle trigger that follows tend to fail?</li>
+      <li>What's the relationship between initiation and absorption mechanically?</li>
+      <li>Why is the GC Asia-open window particularly good for learning initiation?</li>
+    </ol>
+  </div>
+
+  <div class="journal">
+    <span class="journal-label">Journal prompt</span>
+    Pull up one losing candle trade from your live trading this week and one winning trade. Look at the tape behind each. Can you describe the initiation difference between them? If yes — congratulations, you've found your filter. If no — this is exactly what week six is for.
+  </div>
+</section>
+
+<!-- WEEK 6 -->
+<section class="module" id="wk6">
+  <div class="module-header">
+    <div class="module-num">06</div>
+    <div>
+      <div class="module-week">Week Six</div>
+      <div class="module-title">Integration — your filter, defined and disciplined</div>
+    </div>
+  </div>
+
+  <p class="drop-cap">Five weeks of pattern exposure. Five weeks of watching, journaling, and matching tape to outcome without trading off the tape. The work of week six is consolidation: turning what you've absorbed into a written, repeatable filter that sits between your candle trigger and your entry click. By the end of this week, you should have a personal decision protocol you can articulate in two sentences and execute in under five seconds.</p>
+
+  <h2>The decision tree</h2>
+
+  <p>Here's the structure to start with. Treat it as a draft your live experience will refine over the next 30 days. The point is not that this exact tree is correct for you — it's that <em>you have a tree at all</em>, in writing, that you can audit and improve.</p>
+
+  <div class="card">
+    <span class="card-label">Pre-trade checklist · 5 seconds at the moment of trigger</span>
+    <ol>
+      <li><strong>Session check.</strong> Am I in an active GC window (Asia, London, NY morning)? If no — skip.</li>
+      <li><strong>Initiation check.</strong> In the 60 seconds preceding this trigger, did I see real initiation in my direction (book gave way, aggressive bubbles, CVD aligned)? If no — skip or take half size.</li>
+      <li><strong>Absorption check.</strong> Is there a visible absorption pattern forming against my direction at any nearby level? If yes — skip.</li>
+      <li><strong>Pulled-liquidity check.</strong> Did liquidity in front of price recently get pulled in my direction? If yes — A-grade, take full size with confidence.</li>
+      <li><strong>Default action.</strong> If all checks are clean and at least one is positive: take normal size. If checks are mixed: take half size or skip per your discretion.</li>
+    </ol>
+  </div>
+
+  <h2>Position sizing by tape grade</h2>
+
+  <p>One of the most important lessons of this course doesn't relate to entry — it relates to size. Once you can grade tape quality, you can scale size accordingly. This is far more powerful than just refusing bad trades, because most setups aren't binary good/bad — they're shades of gray.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Grade</th>
+        <th>Tape quality</th>
+        <th>Position size</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>A</strong></td>
+        <td>Real initiation + pulled liquidity ahead + aligned CVD</td>
+        <td class="mono">Full normal size</td>
+      </tr>
+      <tr>
+        <td><strong>B</strong></td>
+        <td>Aligned tape but no clear initiation; or initiation with mild divergence</td>
+        <td class="mono">Half size</td>
+      </tr>
+      <tr>
+        <td><strong>C</strong></td>
+        <td>Drifting move, neutral CVD, no obvious tape support</td>
+        <td class="mono">Quarter size or skip</td>
+      </tr>
+      <tr>
+        <td><strong>F</strong></td>
+        <td>Absorption against your direction, or visible failed initiation</td>
+        <td class="mono">Skip — no exceptions</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Your existing system makes money at indiscriminate sizing because the candle pattern is positively skewed. Adding even rough tape grading to size decisions should push your expectancy meaningfully higher without changing what you trade — only how much you trade it.</p>
+
+  <h2>Journaling the integration</h2>
+
+  <p>For 30 days after this course ends, every trade you take goes into a structured journal. The columns are simple but rigorous: timestamp, direction, candle setup quality, tape grade (A/B/C/F), size taken, outcome (target hit / stopped / managed), final P&L in ticks, and one sentence on what the tape was doing at entry.</p>
+
+  <p>After 30 days, sort the journal by tape grade and look at win rate and expectancy in each bucket. This is your evidence. If A-grade trades win at 95% and F-grade you skipped trades have an obvious different profile, you have your filter and you trade it. If the buckets show no separation, you haven't learned the filter yet and you keep watching.</p>
+
+  <h2>What stays the same</h2>
+
+  <p>Your candle system. Your existing risk management. The instruments you trade. The accounts you trade them in. The position-sizing-to-withstand-drawdown approach that has been working. Nothing about your existing edge changes. The only thing being added is a 5-second filter step between trigger and entry.</p>
+
+  <p>What changes is the trades you skip. After a few weeks of disciplined application, you should be skipping 30-50% of triggers. The trades you take should be cleaner, more often work quickly, and the average drawdown on winners should drop meaningfully. The catastrophic 9.4% should diminish — not vanish, but materially shrink — because the absorption-failure pattern that drives those losses is exactly what week 4 trained you to spot in advance.</p>
+
+  <div class="callout-warning">
+    <span class="card-label">The trap to avoid</span>
+    <p style="margin: 0;">After this course you'll be tempted to start taking trades <em>off the tape itself</em> — reading absorption and trying to fade, reading initiation and trying to chase. Don't. The course was designed to give you a filter for your existing system, not a new system. Tape-only entries require an additional level of skill and a different risk framework. That's a separate project, for next year if at all. For now: candle trigger + tape filter + your existing rules. Nothing more.</p>
+  </div>
+
+  <div class="plan">
+    <div class="plan-title">Daily Practice — Week Six</div>
+    <div class="plan-sub">Active integration · paper-grade your live trades, do not change behavior yet</div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 1-3</div>
+      <div class="plan-day-task">For every live candle trigger you see — taken or not — silently grade the tape A/B/C/F before the outcome. Log the grade and the outcome. Trade your normal system; the grading is observation only.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 4</div>
+      <div class="plan-day-task">Review your three days of grades. Does grade align with outcome? If yes, you're ready for live integration. If no, identify which check (session / initiation / absorption / pulled liquidity) is throwing your grade off.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 5</div>
+      <div class="plan-day-task">Write your personal decision protocol on a single page. What checks do YOU run, in what order, with what defaults. This is the document you'll keep next to your monitor.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Weekend</div>
+      <div class="plan-day-task">Re-read your week 1 journal entry. Compare what you knew then to what you can see now. Then commit to the 30-day integration plan starting Monday.</div>
+    </div>
+  </div>
+
+  <div class="test">
+    <div class="test-title">Self-Test — End of Week Six (and the course)</div>
+    <ol>
+      <li>What is your personal pre-trade checklist, in writing?</li>
+      <li>How does tape grade map to your position sizing decision?</li>
+      <li>Why does this course not encourage trading off tape patterns alone?</li>
+      <li>What is the single most important pattern you learned, and why?</li>
+      <li>What's your 30-day integration plan, and what evidence will tell you whether it worked?</li>
+    </ol>
+  </div>
+
+  <div class="journal">
+    <span class="journal-label">Final journal prompt</span>
+    The first journal entry from week one is six weeks old now. Read it. Then write a paragraph to the version of yourself who wrote that. What can you tell that person about what's actually visible on the tape, what they were missing, and what to focus on next?
+  </div>
+</section>
+
+<!-- APPENDIX -->
+<section class="appendix">
+
+<section id="patterns">
+  <div class="appendix-num">Appendix A</div>
+  <h2>Pattern Flashcards</h2>
+  <p>Quick reference for the eight patterns covered. Print this section if you'd like a desk-side reference. Each card includes the visual signature, what it means, and how to act on it within your existing candle framework.</p>
+
+  <div class="pattern">
+    <div class="pattern-marker">α</div>
+    <div class="pattern-body">
+      <div class="pattern-name">Stacked Liquidity</div>
+      <div class="pattern-tagline">Real walls · large persistent resting size</div>
+      <dl>
+        <dt>Visual</dt><dd>Thick bright band sitting at one price for many minutes or hours, surviving nearby price action.</dd>
+        <dt>Meaning</dt><dd>Institutional commitment to a price level. Real defense.</dd>
+        <dt>Action</dt><dd>Treat as a magnet that price will test, and a wall that price will struggle to break. Trades in the direction of approach often fade off the wall.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="pattern">
+    <div class="pattern-marker">β</div>
+    <div class="pattern-body">
+      <div class="pattern-name">Iceberg Orders</div>
+      <div class="pattern-tagline">Hidden refresh size at a price</div>
+      <dl>
+        <dt>Visual</dt><dd>Modest visible size at a level, but volume bubbles arriving at that level are repeatedly larger than the visible size could account for, and price doesn't move through.</dd>
+        <dt>Meaning</dt><dd>A large order being sliced and refreshed. Highest-quality real liquidity signal.</dd>
+        <dt>Action</dt><dd>Skip candle triggers that point into an iceberg level. Wait for the iceberg to be exhausted; the move that follows is usually fast.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="pattern">
+    <div class="pattern-marker">γ</div>
+    <div class="pattern-body">
+      <div class="pattern-name">Pulled Liquidity</div>
+      <div class="pattern-tagline">Vanishing books in front of approaching price</div>
+      <dl>
+        <dt>Visual</dt><dd>A bright cluster goes dim or disappears as price closes in.</dd>
+        <dt>Meaning</dt><dd>Whoever placed those orders didn't actually want to defend the level. Their absence guarantees price moves through.</dd>
+        <dt>Action</dt><dd>A-grade signal in the direction of the move. If a candle trigger fires while liquidity is pulling ahead, take full size.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="pattern">
+    <div class="pattern-marker">δ</div>
+    <div class="pattern-body">
+      <div class="pattern-name">Spoofing</div>
+      <div class="pattern-tagline">Fake orders intended to mislead</div>
+      <dl>
+        <dt>Visual</dt><dd>Brief bright flashes that appear, sit briefly, and cancel without ever being tested. Often repeated at similar levels.</dd>
+        <dt>Meaning</dt><dd>Deliberately misleading display. Not real liquidity.</dd>
+        <dt>Action</dt><dd>Discount any apparent "level" being created by spoofing. Don't fade into it; don't trust it as support.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="pattern">
+    <div class="pattern-marker">ε</div>
+    <div class="pattern-body">
+      <div class="pattern-name">CVD Divergence</div>
+      <div class="pattern-tagline">Price and aggression disagreeing</div>
+      <dl>
+        <dt>Visual</dt><dd>Price making higher high, CVD making lower high (or vice versa for downside).</dd>
+        <dt>Meaning</dt><dd>The price move isn't being driven by real aggression in its direction. Fragile.</dd>
+        <dt>Action</dt><dd>Don't take candle triggers that align with the price direction during clear divergence. Wait for resolution.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="pattern">
+    <div class="pattern-marker">ζ</div>
+    <div class="pattern-body">
+      <div class="pattern-name">Absorption</div>
+      <div class="pattern-tagline">Price stalled despite heavy aggression</div>
+      <dl>
+        <dt>Visual</dt><dd>Tight price band, big bubbles arriving in one direction, heatmap stays bright at the level, CVD trends but price doesn't.</dd>
+        <dt>Meaning</dt><dd>Aggressive side throwing everything it has at a wall. Wall is winning.</dd>
+        <dt>Action</dt><dd>Skip candle triggers in the aggressive direction. The reversal is the trade — but for now, observe only.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="pattern">
+    <div class="pattern-marker">η</div>
+    <div class="pattern-body">
+      <div class="pattern-name">Initiation</div>
+      <div class="pattern-tagline">Aggression meets empty room</div>
+      <dl>
+        <dt>Visual</dt><dd>Aggressive push, resting liquidity ahead pulls or evaporates, price rolls through with continued aggression.</dd>
+        <dt>Meaning</dt><dd>The start of a real move. Bookmap's clearest "this is the trade" signal.</dd>
+        <dt>Action</dt><dd>If a candle trigger aligns with initiation, A-grade entry — take normal size. Most reliable scalp setup in the entire framework.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="pattern">
+    <div class="pattern-marker">θ</div>
+    <div class="pattern-body">
+      <div class="pattern-name">Failed Initiation</div>
+      <div class="pattern-tagline">A real start that dies</div>
+      <dl>
+        <dt>Visual</dt><dd>Initiation begins normally, then bubbles shrink, tape slows, heatmap rebuilds in the direction of the move.</dd>
+        <dt>Meaning</dt><dd>Aggression came in but was insufficient. Move dies. Reversal often follows.</dd>
+        <dt>Action</dt><dd>Skip candle triggers behind failed initiation — this is the pattern most associated with your 9.4% catastrophic losses.</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section id="glossary">
+  <div class="appendix-num">Appendix B</div>
+  <h2>Glossary</h2>
+  <div class="glossary">
+    <div class="glossary-item">
+      <div class="glossary-term">Absorption</div>
+      <div class="glossary-def">Aggressive flow meeting passive resting orders that hold the level despite the aggression. Price doesn't move; the aggressive side exhausts.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Aggression</div>
+      <div class="glossary-def">Market orders crossing the spread to execute immediately. The only thing that moves price.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Ask / Offer</div>
+      <div class="glossary-def">The lowest price at which someone is willing to sell. Above current market.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Bid</div>
+      <div class="glossary-def">The highest price at which someone is willing to buy. Below current market.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">CVD (Cumulative Volume Delta)</div>
+      <div class="glossary-def">Running sum of buy aggression minus sell aggression. Visualizes net flow over time.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Heatmap</div>
+      <div class="glossary-def">Bookmap's visualization of resting limit orders over time. Brightness equals size; horizontal axis is time.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Iceberg</div>
+      <div class="glossary-def">A large order displayed in small slices, refreshed as each slice is consumed. Hidden real liquidity.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Initiation</div>
+      <div class="glossary-def">Aggressive flow that breaks through resting liquidity, starting a sustained move.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Limit Order</div>
+      <div class="glossary-def">A passive order to buy or sell at a specific price, waiting for someone aggressive to take it.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Market Order</div>
+      <div class="glossary-def">An aggressive order to buy or sell immediately at the best available price.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Pulled Liquidity</div>
+      <div class="glossary-def">Resting orders that disappear from the book before being tested. Reveals lack of conviction by the placer.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Spoofing</div>
+      <div class="glossary-def">Placing large orders without intent to execute, to manipulate other participants' decisions. Illegal but persistent.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Stacking</div>
+      <div class="glossary-def">Multiple large orders building up at adjacent price levels, forming a defensive structure.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Volume Bubble</div>
+      <div class="glossary-def">Bookmap visual of aggressive volume at a price/time. Size = contracts traded, color = direction (green buy / red sell).</div>
+    </div>
+  </div>
+</section>
+
+<section id="resources">
+  <div class="appendix-num">Appendix C</div>
+  <h2>Resource Directory</h2>
+
+  <p>Curated channels and resources I have high confidence in. I have not embedded specific video titles because video catalogs change, and I'd rather send you to a reliable channel than to a fabricated link. Browse each channel for content matching your current course week.</p>
+
+  <h3>Official Bookmap resources</h3>
+
+  <div class="resource">
+    <div class="resource-name">Bookmap University</div>
+    <div class="resource-meta">Official · bookmap.com/university</div>
+    <div class="resource-desc">The platform's own training curriculum. Free tier covers fundamentals; paid tier goes into detailed pattern recognition. Start here in week 1 for platform mechanics. The pattern modules align reasonably well with weeks 2-5 of this course.</div>
+  </div>
+
+  <div class="resource">
+    <div class="resource-name">Bookmap YouTube Channel</div>
+    <div class="resource-meta">Official · youtube.com/@bookmap</div>
+    <div class="resource-desc">Webinars, guest trader sessions, feature explainers. Variable quality depending on guest, but the platform-mechanics videos are reliable references.</div>
+  </div>
+
+  <h3>Independent channels with consistent quality</h3>
+
+  <div class="resource">
+    <div class="resource-name">Axia Futures</div>
+    <div class="resource-meta">YouTube · prop firm content</div>
+    <div class="resource-desc">London-based prop firm with extensive free content on order flow concepts. Their material on absorption and trapped traders is particularly good. Heavy emphasis on European session products but the principles transfer cleanly to GC.</div>
+  </div>
+
+  <div class="resource">
+    <div class="resource-name">Trader Dale</div>
+    <div class="resource-meta">YouTube + paid course material</div>
+    <div class="resource-desc">Volume profile and order flow educator. Some material is platform-agnostic; some is specific to ATAS but translates to Bookmap concepts. Good for reinforcing weeks 3-4 of this course.</div>
+  </div>
+
+  <div class="resource">
+    <div class="resource-name">SMB Capital</div>
+    <div class="resource-meta">YouTube · proprietary trading firm</div>
+    <div class="resource-desc">Equity-focused but the order-flow concepts apply. Mike Bellafiore's "The Playbook" (book, separate purchase) is one of the few genuinely useful trading books on the market and worth reading during this course.</div>
+  </div>
+
+  <h3>Tools beyond Bookmap that may be useful later</h3>
+
+  <div class="resource">
+    <div class="resource-name">NinjaTrader Order Flow Add-ons</div>
+    <div class="resource-meta">Reference only · post-course</div>
+    <div class="resource-desc">If you eventually want order-flow data integrated into your existing NT execution stack, NinjaTrader has native order flow modules. Not needed for this course; relevant for the integration phase 30+ days after course completion.</div>
+  </div>
+
+  <div class="resource">
+    <div class="resource-name">Sierra Chart</div>
+    <div class="resource-meta">Reference only · advanced platform</div>
+    <div class="resource-desc">Some serious order flow traders prefer Sierra for its footprint chart implementation. Not necessary if Bookmap is working for you. Mentioned only for completeness.</div>
+  </div>
+</section>
+
+<section id="templates">
+  <div class="appendix-num">Appendix D</div>
+  <h2>Journal Templates</h2>
+
+  <h3>Daily observation log (weeks 1-5)</h3>
+
+  <div class="card">
+    <span class="card-label">Use during course observation sessions</span>
+    <table>
+      <thead>
+        <tr><th>Field</th><th>Example entry</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Date / session</strong></td><td>2026-05-04 / GC Asia open 17:00-18:30 CT</td></tr>
+        <tr><td><strong>Pattern observed</strong></td><td>Pulled liquidity at 4585.00</td></tr>
+        <tr><td><strong>Pre-pattern context</strong></td><td>Range-bound 4582-4585 for 20 min, asks stacking at 4585</td></tr>
+        <tr><td><strong>What happened</strong></td><td>Ask cluster pulled, price broke 4585 within 30 sec, ran to 4592</td></tr>
+        <tr><td><strong>Magnitude</strong></td><td>+7 points / 70 ticks before stalling</td></tr>
+        <tr><td><strong>What I learned</strong></td><td>Pulled liquidity moves were clean and fast in thin Asia tape</td></tr>
+        <tr><td><strong>Tag</strong></td><td>#pulled-liq #asia #clean</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Live trade journal (week 6 + 30-day integration)</h3>
+
+  <div class="card">
+    <span class="card-label">One row per live trade</span>
+    <table>
+      <thead>
+        <tr><th>Field</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Timestamp</strong></td><td>HH:MM:SS CT</td></tr>
+        <tr><td><strong>Direction</strong></td><td>Long / Short</td></tr>
+        <tr><td><strong>Candle setup grade</strong></td><td>Strong / Standard / Weak (your existing assessment)</td></tr>
+        <tr><td><strong>Tape grade</strong></td><td>A / B / C / F (per the integration framework)</td></tr>
+        <tr><td><strong>Size taken</strong></td><td>Full / Half / Quarter / 0</td></tr>
+        <tr><td><strong>Outcome</strong></td><td>Target / Time exit / Stopped / Managed</td></tr>
+        <tr><td><strong>Final P&L (ticks)</strong></td><td>Signed integer</td></tr>
+        <tr><td><strong>Max adverse (ticks)</strong></td><td>How deep underwater before resolving</td></tr>
+        <tr><td><strong>Tape note</strong></td><td>One sentence: "Initiation clean, pulled liquidity ahead at 4592" or similar</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>After 30 days, sort by tape grade. The win rate, expectancy, and average MAE should differ meaningfully between A/B/C buckets if your filter is working. If they don't differ — your filter isn't real yet, and you keep observing.</p>
+</section>
+
+<section id="post">
+  <div class="appendix-num">Appendix E</div>
+  <h2>30-Day Post-Course Integration Plan</h2>
+
+  <p>Six weeks of observation built pattern recognition. Thirty days of disciplined application turns recognition into edge. The plan below is intentionally conservative — most of the failure modes in this kind of integration come from moving too fast.</p>
+
+  <div class="plan">
+    <div class="plan-title">Days 1-7 · Paper grading only</div>
+    <div class="plan-sub">Observe and grade · do not change live behavior</div>
+    <div class="plan-day">
+      <div class="plan-day-num">Each session</div>
+      <div class="plan-day-task">Trade your candle system exactly as you do today. For every trigger you take or skip, silently grade the tape A/B/C/F before the outcome resolves. Log the grade. Match grade to outcome at end of day.</div>
+    </div>
+  </div>
+
+  <div class="plan">
+    <div class="plan-title">Days 8-14 · Skip-only filter</div>
+    <div class="plan-sub">Begin acting on the filter — but only by skipping</div>
+    <div class="plan-day">
+      <div class="plan-day-num">Rule</div>
+      <div class="plan-day-task">If your live tape grade for a setup is F, skip the trade. Don't take any other actions yet. Don't change size on A or B trades. The first behavior to add is just refusing the worst.</div>
+    </div>
+  </div>
+
+  <div class="plan">
+    <div class="plan-title">Days 15-21 · Full sizing matrix</div>
+    <div class="plan-sub">Apply size scaling per the grade table</div>
+    <div class="plan-day">
+      <div class="plan-day-num">Rule</div>
+      <div class="plan-day-task">A = full size. B = half. C = quarter or skip. F = skip. Trade this for one full week. Daily journal entries continue.</div>
+    </div>
+  </div>
+
+  <div class="plan">
+    <div class="plan-title">Days 22-30 · Review and refine</div>
+    <div class="plan-sub">Audit the data and adjust the filter</div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 22</div>
+      <div class="plan-day-task">Sort journal by tape grade. Calculate win rate, average MAE, and expectancy in each bucket.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 23-29</div>
+      <div class="plan-day-task">Continue trading the framework. Note any cases where your gut overrode the framework and what happened.</div>
+    </div>
+    <div class="plan-day">
+      <div class="plan-day-num">Day 30</div>
+      <div class="plan-day-task">Final review. Decide whether the framework adds measurable value. If yes, formalize it permanently. If not, identify which check needs revision and run another 30-day cycle.</div>
+    </div>
+  </div>
+
+  <div class="callout-key">
+    <span class="card-label">The honest closing word</span>
+    <p style="margin: 0;">Not every trader needs an order flow filter. Yours might end up being one or two specific patterns rather than the full framework. The point of the course wasn't to install a system — it was to give you the vocabulary to identify what your already-profitable instinct was doing well, and to refine it deliberately. After 30 days of integration, the filter you settle on may look quite different from the one this course outlines. That's the correct outcome.</p>
+  </div>
+</section>
+
+<div class="footer">
+  Reading the Tape · A Personal 6-Week Bookmap Course · GC Focus<br>
+  Written for one trader's specific system. Not for distribution.
+</div>
+
+</section>
+
+</main>
+</div>
+
+</body>
+</html>
